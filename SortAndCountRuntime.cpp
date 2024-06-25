@@ -40,7 +40,7 @@ void countSort(int a[], int n, int exp)
 {
 
     // Output array
-    int *output = new int[n];
+    int* output = new int[n];
     int i, count[10] = { 0 };
 
     // Store count of occurrences
@@ -90,7 +90,7 @@ void merge(int arr[], int l, int m, int r) {
 
     // Tạo mảng tạm
     int* L = new int[n1];
-    int *R = new int[n2];
+    int* R = new int[n2];
 
     // Sao chép dữ liệu vào mảng tạm
     for (int i = 0; i < n1; i++)

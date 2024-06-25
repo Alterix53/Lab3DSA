@@ -138,6 +138,7 @@
     <ClInclude Include="CheckParameter.h" />
     <ClInclude Include="Command.h" />
     <ClInclude Include="DataGenerator.h" />
+    <ClInclude Include="SortAndCountCompare.h" />
     <ClInclude Include="SortAndCountRuntime.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

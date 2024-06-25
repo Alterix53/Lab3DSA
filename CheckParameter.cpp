@@ -8,10 +8,10 @@ bool isAlgorithmName(char algoName[]) {
     if (!isString(algoName))
         return false;
     string name(algoName);
-    if (   name == "selection-sort" || name == "insertion-sort"
-        || name == "bubble-sort"    || name == "shaker-sort" || name == "shell-sort"
-        || name == "heap-sort"      || name == "merge-sort"  || name == "quick-sort"
-        || name == "counting-sort"  || name == "radix-sort"  || name == "flash-sort")
+    if (name == "selection-sort" || name == "insertion-sort"
+        || name == "bubble-sort" || name == "shaker-sort" || name == "shell-sort"
+        || name == "heap-sort" || name == "merge-sort" || name == "quick-sort"
+        || name == "counting-sort" || name == "radix-sort" || name == "flash-sort")
         return true;
     else return false;
 }
@@ -19,7 +19,7 @@ bool isAlgorithmName(char algoName[]) {
 bool isInputOrder(char inputOrder[]) {
     if (!isString(inputOrder))
         return false;
-        
+
     string Order(inputOrder);
     if (Order == "-rand" || Order == "-nsorted" || Order == "-sorted" || Order == "-rev")
         return true;
@@ -99,7 +99,7 @@ bool isCompareMode(char mode[]) {
 
 bool isNumber(char s[])
 {
-    for (int i = 0; i < strlen(s);i++) {
+    for (int i = 0; i < strlen(s); i++) {
         if (isalpha(s[i])) {
             return false;
         }
