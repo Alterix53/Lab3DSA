@@ -351,136 +351,61 @@ void countingSort(int arr[], int n) {
     delete[] output;
 }
 
+/*
+void flashSort(int arr[], int n) {
+    if (n <= 1) return;
 
-void printArray(int arr[], int n)
-{
-    for (int i = 0; i < n; i++)
-        cout << arr[i] << " ";
-    cout << endl;
+    // Bước 1: Phân phối các phần tử vào các lớp
+    int m = int(0.45 * n);
+    int* L = new int[m](); // Sử dụng mảng động cho các lớp và khởi tạo bằng 0
+
+    int minVal = *std::min_element(arr, arr + n);
+    int maxVal = *std::max_element(arr, arr + n);
+    if (minVal == maxVal) {
+        delete[] L;
+        return; // Nếu tất cả các phần tử đều giống nhau
+    }
+
+    double c1 = (double)(m - 1) / (maxVal - minVal);
+
+    for (int i = 0; i < n; i++) {
+        int k = int(c1 * (arr[i] - minVal));
+        L[k]++;
+    }
+
+    // Bước 2: Xây dựng mảng vị trí bắt đầu
+    for (int i = 1; i < m; i++) {
+        L[i] += L[i - 1];
+    }
+
+    // Bước 3: Phân phối lại các phần tử vào đúng lớp và sắp xếp cục bộ
+    int count = 0;
+    int i = 0;
+    while (count < n) {
+        int k = int(c1 * (arr[i] - minVal));
+        while (i >= L[k]) {
+            k = int(c1 * (arr[++i] - minVal));
+        }
+        int temp = arr[i];
+        while (i != L[k]) {
+            k = int(c1 * (temp - minVal));
+            int pos = --L[k];
+            std::swap(temp, arr[pos]);
+            count++;
+        }
+    }
+
+    // Sử dụng insertion sort để sắp xếp các lớp
+    for (int i = 1; i < n; i++) {
+        int key = arr[i];
+        int j = i - 1;
+        while (j >= 0 && arr[j] > key) {
+            arr[j + 1] = arr[j];
+            j--;
+        }
+        arr[j + 1] = key;
+    }
+
+    delete[] L; // Giải phóng bộ nhớ đã cấp phát cho mảng L
 }
-
-//int main(int argc, char* argv[]) {
-//    if (argc != 3) {
-//        cout << "Usage: " << argv[0] << " <sort_type> <array_size>" << endl;
-//        return 1;
-//    }
-//
-//    string sortType = argv[1];
-//    int n = atoi(argv[2]);
-//
-//    int* arr = new int[n];
-//    GenerateRandomData(arr, n);
-//
-//    double start = clock();
-//    if (sortType == "insertion") {
-//        insertionSort(arr, n);
-//    }
-//    else if (sortType == "shaker") {
-//        shakerSort(arr, n);
-//    }
-//    else if (sortType == "shell") {
-//        shellSort(arr, n);
-//    }
-//    else if (sortType == "counting") {
-//        countingSort(arr, n);
-//    }
-//    else {
-//        cout << "Unknown sort type: " << sortType << endl;
-//        delete[] arr;
-//        return 1;
-//    }
-//    double end = clock();
-//    double run_time = (end - start) / CLOCKS_PER_SEC;
-//
-//    cout << "Sorted array: ";
-//    printArray(arr, n);
-//
-//    cout << "Comparison count: " << compareCount << endl;
-//    cout << "Runtime: " << run_time << " seconds" << endl;
-//
-//    delete[] arr;
-//    return 0;
-//}
-
-//int main() {
-//    int n;
-//    cout << "Please choose the number of elements: ";
-//    cin >> n;
-//
-//    int* arr = new int[n];
-//
-//    cout << "Please choose the type of array to create:" << endl;
-//    cout << "1. GenerateSortedData" << endl;
-//    cout << "2. GenerateNearlySortedData" << endl;
-//    cout << "3. GenerateReverseData" << endl;
-//    cout << "4. GenerateRandomData" << endl;
-//
-//    int genType;
-//    cin >> genType;
-//
-//    switch (genType) {
-//    case 1:
-//        GenerateSortedData(arr, n);
-//        break;
-//    case 2:
-//        GenerateNearlySortedData(arr, n);
-//        break;
-//    case 3:
-//        GenerateReverseData(arr, n);
-//        break;
-//    case 4:
-//        GenerateRandomData(arr, n);
-//        break;
-//    default:
-//        cout << "Invalid choice" << endl;
-//        delete[] arr;
-//        return 0;
-//    }
-//
-//    cout << "Please choose the type of sort algorithm:" << endl;
-//    cout << "1. Shaker Sort" << endl;
-//    cout << "2. Shell Sort" << endl;
-//    cout << "3. Counting Sort" << endl;
-//
-//    int sortType;
-//    cin >> sortType;
-//
-//    clock_t start, end;
-//    double runtime;
-//
-//    cout << "Array before sorting:";
-//    printArray(arr, n);
-//    cout << endl;
-//
-//    switch (sortType) {
-//    case 1:
-//        start = clock();
-//        shakerSort(arr, n);
-//        end = clock();
-//        break;
-//    case 2:
-//        start = clock();
-//        shellSort(arr, n);
-//        end = clock();
-//        break;
-//    case 3:
-//        start = clock();
-//        countingSort(arr, n);
-//        end = clock();
-//        break;
-//    default:
-//        cout << "Unknown sort type" << endl;
-//        delete[] arr;
-//        return 0;
-//    }
-//
-//    runtime = double(end - start) / CLOCKS_PER_SEC;
-//
-//    cout << "Sorted array: ";
-//    printArray(arr, n);
-//
-//    cout << "Runtime: " << runtime << " seconds" << endl;
-//
-//    delete[] arr;
-//    return 0;
-//}
+*/

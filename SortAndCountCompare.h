@@ -12,7 +12,7 @@ void heapify(int a[], int N, int i, long long& count_compare);
 void HeapSortCompareCount(int a[], int N, long long& count_compare);
 void mergeSortCompareCount(int a[], int l, int r, long long& count_compare);
 void selectionSortCompareCount(int a[], int n, long long& count_compare);
-void heapify(int a[], int n, int i, long long& count_compare);
+
 void heapSortCompareCount(int a[], int n, long long& count_compare);
 int partition(int a[], int low, int high, long long& count_compare);
 void quickSortCompareCount(int a[], int low, int high, long long& count_compare);	// Quick Sort 

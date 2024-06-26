@@ -51,6 +51,7 @@ void countSort(int a[], int n, int exp, long long& count_compare)
     delete[] output;
 }
 
+
 void radixsortCompareCount(int a[], int n, long long& count_compare)
 {
     count_compare = 0; // Reset biến đếm
@@ -60,23 +61,30 @@ void radixsortCompareCount(int a[], int n, long long& count_compare)
         countSort(a, n, exp, count_compare);
 }
 
-void heapify(int a[], int N, int i, long long& count_compare)
-{
+void heapify(int a[], int n, int i, long long& count_compare) {
+    // Initialize largest as root
     int largest = i;
+    // left = 2*i + 1
     int l = 2 * i + 1;
+    // right = 2*i + 2
     int r = 2 * i + 2;
-
-    if ((++count_compare && l < N) && (++count_compare && a[l] > a[largest]))
+    // If left child is larger than root
+    if (++count_compare && l < n && a[l] > a[largest]) {
         largest = l;
+    }
 
-    if ((++count_compare && r < N) && (++count_compare && a[r] > a[largest]))
+    // If right child is larger than largest so far
+    if (++count_compare && r < n && a[r] > a[largest]) {
         largest = r;
-
-    if (largest != i) {
+    }
+    // If largest is not root
+    if (++count_compare && largest != i) {
         swap(a[i], a[largest]);
-        heapify(a, N, largest, count_compare);
+        // Recursively heapify the affected sub-tree
+        heapify(a, n, largest, count_compare);
     }
 }
+
 
 void HeapSortCompareCount(int a[], int N, long long& count_compare)
 {
@@ -124,28 +132,8 @@ void selectionSortCompareCount(int a[], int n, long long& count_compare) {
     }
 }
 
-void heapify(int a[], int n, int i, long long& count_compare) {
-    // Initialize largest as root
-    int largest = i;
-    // left = 2*i + 1
-    int l = 2 * i + 1;
-    // right = 2*i + 2
-    int r = 2 * i + 2;
-    // If left child is larger than root
-    if (++count_compare && l < n && a[l] > a[largest]) {
-        largest = l;
-    }
-
-    // If right child is larger than largest so far
-    if (++count_compare && r < n && a[r] > a[largest]) {
-        largest = r;
-    }
-    // If largest is not root
-    if (++count_compare && largest != i) {
-        swap(a[i], a[largest]);
-        // Recursively heapify the affected sub-tree
-        heapify(a, n, largest, count_compare);
-    }
+void mergeSortCompareCount(int a[], int l, int r, long long& count_compare) {
+    return;
 }
 
 void heapSortCompareCount(int a[], int n, long long& count_compare) {
