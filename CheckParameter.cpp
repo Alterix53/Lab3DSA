@@ -193,7 +193,9 @@ bool isCommandTypeFive(int argumentNum, char* argv[]) {
         return false;
     if (!isAlgorithmName(argv[3]))
         return false;
-    if (!isNumber(argv[4]) || !isNumber(argv[5]))
+    if (!isNumber(argv[4]))
+        return false;
+    if (!isInputOrder(argv[5]))
         return false;
     return true;
 }

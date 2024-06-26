@@ -25,8 +25,6 @@ void quickSort(int a[], int low, int high);
 
 // --------------------------- LE KHOI ------------------------
 
-using namespace std;
-
 // Insertion Sort algorithm
 void insertionSort(int a[], int n);
 
