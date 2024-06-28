@@ -9,7 +9,7 @@ using namespace std;
 // https://www.geeksforgeeks.org/radix-sort/
 // https://www.geeksforgeeks.org/heap-sort/
 
-void BubbleSortCompareCount(int a[], int n, long long& count_compare)
+void BubbleSortCompareCount(int *a, int n, long long& count_compare)
 {
     int i, j;
     count_compare = 0; // Reset biến đếm
@@ -21,7 +21,7 @@ void BubbleSortCompareCount(int a[], int n, long long& count_compare)
     }
 }
 
-int getMax(int a[], int n, long long& count_compare)
+int FindMax(int *a, int n, long long& count_compare)
 {
     int mx = a[0];
     for (int i = 1; (++count_compare && i < n); i++)
@@ -30,7 +30,15 @@ int getMax(int a[], int n, long long& count_compare)
     return mx;
 }
 
-void countSort(int a[], int n, int exp, long long& count_compare)
+int FindMin(int* a, int n, long long& count_compare) {
+    int minVal = a[0];
+    for (int i = 1; (++count_compare && i < n); i++)
+        if (++count_compare && a[i] < minVal)
+            minVal = a[i];
+    return  minVal;
+}
+
+void countSort(int *a, int n, int exp, long long& count_compare)
 {
     int* output = new int[n];
     int i, count[10] = { 0 };
@@ -52,16 +60,16 @@ void countSort(int a[], int n, int exp, long long& count_compare)
 }
 
 
-void radixsortCompareCount(int a[], int n, long long& count_compare)
+void radixsortCompareCount(int *a, int n, long long& count_compare)
 {
     count_compare = 0; // Reset biến đếm
-    int m = getMax(a, n, count_compare);
+    int m = FindMax(a, n, count_compare);
 
     for (int exp = 1; ++count_compare && m / exp > 0; exp *= 10)
         countSort(a, n, exp, count_compare);
 }
 
-void heapify(int a[], int n, int i, long long& count_compare) {
+void heapify(int *a, int n, int i, long long& count_compare) {
     // Initialize largest as root
     int largest = i;
     // left = 2*i + 1
@@ -86,7 +94,7 @@ void heapify(int a[], int n, int i, long long& count_compare) {
 }
 
 
-void HeapSortCompareCount(int a[], int N, long long& count_compare)
+void HeapSortCompareCount(int *a, int N, long long& count_compare)
 {
     count_compare = 0; // Reset biến đếm
     for (int i = N / 2 - 1; i >= 0; i--)
@@ -108,15 +116,15 @@ void swap(long long& a, long long& b) {
     b = temp;
 }
 
-void selectionSortCompareCount(int a[], int n, long long& count_compare) {
+void selectionSortCompareCount(int *a, int n, long long& count_compare) {
     // Initialize counters for comparisons
     count_compare = 0;
 
-    // Traverse the array
+    // Traverse the aay
     for (int i = 0; i < n - 1; ++i) {
         // Set the initial minimum index to the current position
         int min_idx = i;
-        // Traverse the remaining unsorted part of the array
+        // Traverse the remaining unsorted part of the aay
         for (int j = i + 1; j < n; ++j) {
             count_compare++; // Count each comparison in the inner loop
 
@@ -132,13 +140,53 @@ void selectionSortCompareCount(int a[], int n, long long& count_compare) {
     }
 }
 
-void mergeSortCompareCount(int a[], int l, int r, long long& count_compare) {
-    return;
+void merge(int *a, int l, int m, int r, long long& count_compare)
+{
+    int n1 = m - l + 1;
+    int n2 = r - m;
+    int* L = new int[n1];
+    int *R = new int[n2];
+
+    for (int i = 0; ++count_compare && i < n1; i++)
+        L[i] = a[l + i];
+    for (int j = 0; ++count_compare && j < n2; j++)
+        R[j] = a[m + 1 + j];
+
+    int i = 0, j = 0, k = l;
+    while ((++count_compare && i < n1) && (++count_compare && j < n2)) {
+        if (++count_compare && L[i] <= R[j]) {
+            a[k] = L[i++];
+        }
+        else {
+            a[k] = R[j++];
+        }
+        k++;
+    }
+
+    while (++count_compare && i < n1) {
+        a[k++] = L[i++];
+    }
+
+    while (++count_compare && j < n2) {
+        a[k++] = R[j++];
+    }
+
+    delete[]L;
+    delete[]R;
 }
 
-void heapSortCompareCount(int a[], int n, long long& count_compare) {
+void mergeSortCompareCount(int *a, int l, int r, long long& count_compare)
+{
+    if (++count_compare && l < r) {
+        int m = l + (r - l) / 2;
+        mergeSortCompareCount(a, l, m, count_compare);
+        mergeSortCompareCount(a, m + 1, r, count_compare);
+        merge(a, l, m, r, count_compare);
+    }
+}
+void heapSortCompareCount(int *a, int n, long long& count_compare) {
     count_compare = 0;
-    // Build heap (rearrange array)
+    // Build heap (reaange aay)
     for (int i = n / 2 - 1; i >= 0; i--) {
         heapify(a, n, i, count_compare);
     }
@@ -152,41 +200,42 @@ void heapSortCompareCount(int a[], int n, long long& count_compare) {
     }
 }
 
-int partition(int a[], int low, int high, long long& count_compare) {
-    // Choose the pivot
-    int pivot = a[high];
-    // Index of smaller element and indicate the right position of pivot found so far
-    int i = low - 1;
-    for (int j = low; j <= high - 1; j++) {
-        count_compare++; // for the comparison in the if statement
-        // If current element is smaller than the pivot
-        if (a[j] < pivot) {
-            // Increment index of smaller element
-            i++;
-            // Swap a[i] and a[j]
+// Find the median element in the aay
+int medianOfThree(int* a, int l, int r, long long& count_compare) {
+    int mid = l + (r - l) / 2;
+    if (++count_compare && a[l] > a[mid]) swap(a[l], a[mid]);
+    if (++count_compare && a[l] > a[r]) swap(a[l], a[r]);
+    if (++count_compare && a[mid] > a[r]) swap(a[mid], a[r]);
+    return mid;
+}
+
+// Function to partition the aay and return the pivot index after partitioning
+int partition(int* a, int l, int r, long long& count_compare) {
+    int pivotIndex = medianOfThree(a, l, r, count_compare);
+    int pivot = a[pivotIndex];
+    swap(a[pivotIndex], a[r]); // Move the pivot to the end for ease of operation
+    int i = l - 1;
+
+    for (int j = l; ++count_compare && j < r; ++j) {
+        if (++count_compare && a[j] < pivot) {
+            ++i;
             swap(a[i], a[j]);
         }
     }
-
-    // Swap a[i + 1] and a[high] (or pivot)
-    swap(a[i + 1], a[high]);
+    swap(a[i + 1], a[r]); // Return the pivot to the correct position
     return i + 1;
 }
 
-void quickSortCompareCount(int a[], int low, int high, long long& count_compare) {
-    // When low is less than high
-    if (++count_compare && low < high) {
-        // pi is the partition return index of pivot
-        int pi = partition(a, low, high, count_compare);
-        // Recursion Call
-        // Smaller element than pivot goes left and higher element goes right
-        quickSortCompareCount(a, low, pi - 1, count_compare);
-        quickSortCompareCount(a, pi + 1, high, count_compare);
+// Function quick sort
+void quickSortCompareCount(int* a, int l, int r, long long& count_compare) {
+    if (++count_compare && l < r) {
+        int pi = partition(a, l, r, count_compare);
+        quickSortCompareCount(a, l, pi - 1, count_compare);
+        quickSortCompareCount(a, pi + 1, r, count_compare);
     }
 }
-
 // Insertion Sort algorithm with comparison count
-void insertionSortCompareCount(int a[], int n, long long& compareCount)
+void insertionSortCompareCount(int *a, int n, long long& compareCount)
 {
     compareCount = 0;  // Initialize comparison count
     int i, key, j;
@@ -202,7 +251,7 @@ void insertionSortCompareCount(int a[], int n, long long& compareCount)
 }
 
 // Shaker (Cocktail) Sort algorithm with comparison count
-void shakerSortCompareCount(int a[], int n, long long& compareCount)
+void shakerSortCompareCount(int *a, int n, long long& compareCount)
 {
     compareCount = 0;  // Initialize comparison count
     bool swapped = true;
@@ -231,11 +280,12 @@ void shakerSortCompareCount(int a[], int n, long long& compareCount)
             }
         }
         ++start;  // Move start pointer
+    
     }
 }
 
 // Shell Sort algorithm with comparison count
-void shellSortCompareCount(int a[], int n, long long& compareCount)
+void shellSortCompareCount(int *a, int n, long long& compareCount)
 {
     compareCount = 0;  // Initialize comparison count
     for (int gap = n / 2; gap > 0; gap /= 2) {  // Reduce gap size until it's 1
@@ -251,7 +301,7 @@ void shellSortCompareCount(int a[], int n, long long& compareCount)
 }
 
 // Counting Sort algorithm with comparison count
-void countingSortCompareCount(int a[], int n, long long& compareCount) {
+void countingSortCompareCount(int *a, int n, long long& compareCount) {
     compareCount = 0;  // Initialize comparison count
 
     if (n <= 1) return;  // Base case: already sorted or single element
@@ -286,4 +336,63 @@ void countingSortCompareCount(int a[], int n, long long& compareCount) {
 
     delete[] count;
     delete[] output;
+}
+void FlashSortCompareCount(int* a, int n, long long &count_compare) {
+    if (++count_compare && n <= 1) return;
+
+    // Bước 1: create classes
+    int m = int(0.45 * n); // number of classes is 0.45*(number of elements in aay)
+    int* L = new int[m]();
+
+    int minVal = FindMin(a, n, count_compare);
+    int maxVal = FindMax(a, n, count_compare);
+
+    // return if min = max, means that all element are the same
+    if (++count_compare && minVal == maxVal) {
+        delete[] L;
+        return;
+    }
+
+    double c1 = (double)(m - 1) / (maxVal - minVal);
+
+    for (int i = 0; ++count_compare, i < n; i++) {
+        int k = int(c1 * (a[i] - minVal));
+        L[k]++;
+    }
+
+    // build starting classes
+    for (int i = 1; ++count_compare, i < m; i++) {
+        L[i] += L[i - 1];
+    }
+
+    // Put elements into the correct class and sort locall
+    int count = 0;
+    int i = 0;
+    while (++count_compare && count < n) {
+        int k = int(c1 * (a[i] - minVal));
+        while (++count_compare && i >= L[k]) {
+            k = int(c1 * (a[++i] - minVal));
+        }
+        int temp = a[i];
+        while (++count_compare && i != L[k]) {
+            k = int(c1 * (temp - minVal));
+            int pos = --L[k];
+            swap(temp, a[pos]);
+            count++;
+        }
+    }
+
+    // use insertion sort for sorting each class
+    for (int i = 1; ++count_compare, i < n; i++) {
+        int key = a[i];
+        int j = i - 1;
+        while ((++count_compare && j >= 0) && (++count_compare && a[j] > key)) {
+            a[j + 1] = a[j];
+            j--;
+        }
+        a[j + 1] = key;
+    }
+
+    // delete the aay
+    delete[] L;
 }

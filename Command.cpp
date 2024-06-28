@@ -1,15 +1,5 @@
 #include "Command.h"
-#include "CheckParameter.h"
-#include "SortAndCountRuntime.h"
-#include "SortAndCountCompare.h"
-#include "DataGenerator.h"
-#include <iostream>
-#include <string>
-#include <fstream>
-#include <cstring>
-#include <ctime>
-#include <time.h>
-#include <chrono>
+
 using namespace std;
 
 string ConverString(char inputOrder[]) {
@@ -20,12 +10,12 @@ string ConverString(char inputOrder[]) {
 		return "Nearly sorted";
 	if (output == "-rev")
 		return "Reverse";
-	if (output == "sorted")
+	if (output == "-sorted")
 		return "Sorted";
 	return "";
 }
 
-void WriteArrayToFile(int arr[], int arrSize, string fileName) {
+void WriteArrayToFile(int *arr, int arrSize, string fileName) {
 	ofstream ofs;
 	ofs.open(fileName); 
 	if (!ofs) {
@@ -54,7 +44,7 @@ int * ReadArrayFromFile(int &arrSize, string fileName) {
 	ifs.close();
 	return arr;
 }
-void RunSorting(int arr[], int arraySize, char algorithmName[], char outputParameters[], double& runtime, long long& compare) {
+void RunSorting(int *arr, int arraySize, char algorithmName[], char outputParameters[], double& runtime, long long& compare) {
 	string runMode(outputParameters);
 	if (runMode == "-time" || runMode == "-both") {
 		clock_t start, end;
@@ -121,6 +111,9 @@ void RunSorting(int arr[], int arraySize, char algorithmName[], char outputParam
 			break;
 		}
 		case 10: {
+			start = clock();
+			FlashSort(arr, arraySize);
+			end = clock();
 			break;
 		}
 		default:
@@ -172,6 +165,7 @@ void RunSorting(int arr[], int arraySize, char algorithmName[], char outputParam
 			break;
 		}
 		case 10: {
+			FlashSortCompareCount(arr, arraySize, compare);
 			break;
 		}
 		default:
@@ -234,9 +228,10 @@ void RunCommandTypeTwo(char algorithmName[], char inputSize[], char inputOrder[]
 	WriteArrayToFile(arr, arrSize, "input.txt");
 
 	// print the basic info base on the command
+	cout << "ALGORITHM MODE" << endl;
 	cout << "Algorithm name: " << algorithmName << endl;
 	cout << "Input size: " << arrSize << endl;
-	cout << "Input order" << ConverString(inputOrder);
+	cout << "Input order: " << ConverString(inputOrder) << endl;
 	cout << "---------------------------------" << endl;
 
 	// run the correctspoding sorting algorithm
@@ -254,7 +249,7 @@ void RunCommandTypeTwo(char algorithmName[], char inputSize[], char inputOrder[]
 	delete[] arr;
 }
 
-void RunSpecificArrayOrderType(int arr[], int arrSize, int arrOrder, char algorithmName[], char outputParameters[], string fileName) {
+void RunSpecificArrayOrderType(int *arr, int arrSize, int arrOrder, char algorithmName[], char outputParameters[], string fileName) {
 
 	// initialize needed variables
 	double runtime = 0;
@@ -290,21 +285,25 @@ void RunCommandTypeThree(char algorithmName[], char inputSize[], char outputPara
 	cout << "Input Order: Randomize" << endl;
 	cout << "-----------------------------" << endl;
 	RunSpecificArrayOrderType(arr, arrSize, 0, algorithmName, outputParameters, "input_1.txt");
+	cout << endl;
 
 	// Nearly sorted
 	cout << "Input Order: Nearly Sorted" << endl;
 	cout << "-----------------------------" << endl;
 	RunSpecificArrayOrderType(arr, arrSize, 3, algorithmName, outputParameters, "input_2.txt");
+	cout << endl;
 
 	// Sorted
 	cout << "Input Order: Sorted" << endl;
 	cout << "-----------------------------" << endl;
 	RunSpecificArrayOrderType(arr, arrSize, 1, algorithmName, outputParameters, "input_3.txt");
+	cout << endl;
 
 	// Reverse
 	cout << "Input Order: Reversed" << endl;
 	cout << "-----------------------------" << endl;
 	RunSpecificArrayOrderType(arr, arrSize, 2, algorithmName, outputParameters, "input_4.txt");
+	cout << endl;
 
 	// delete the array
 	delete[] arr;
@@ -367,7 +366,7 @@ void RunCommandTypeFive(char algorithmName1[], char algorithmName2[], char input
 	cout << "COMPARE MODE" << endl;
 	cout << "Algorithm: " << algorithmName1 << " | " << algorithmName2 << endl;
 	cout << "input size: " << arrSize << endl;
-	cout << "input order: " << ConverString(inputOrder);
+	cout << "input order: " << ConverString(inputOrder) << endl;
 	cout << "---------------------------------" << endl;
 
 	// Run both sorting algorithm
