@@ -27,6 +27,8 @@ bool isInputOrder(char inputOrder[]) {
 }
 
 int ArrayOrderType(char inputOrder[]) {
+    if (!isString(inputOrder))
+        return false;
     string Order(inputOrder);
     if (Order == "-rand")
         return 0;
@@ -50,7 +52,7 @@ bool isOutputParameters(char outputType[]) {
 
 int OutputType(char outputType[]) {
     string output(outputType);
-    if (output == "time")
+    if (output == "-time")
         return 0;
     if (output == "-comp")
         return 1;

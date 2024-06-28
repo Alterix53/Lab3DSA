@@ -7,32 +7,43 @@
 // https://www.geeksforgeeks.org/heap-sort/
 
 
-// ------------------------ PHAM ANH ----------------------
-void bubbleSort(int a[], int n);
-int getMax(int a[], int n);
-void countSort(int a[], int n, int exp);
-void radixsort(int a[], int n);
-void merge(int arr[], int l, int m, int r);
-void mergeSort(int arr[], int l, int r);
-// --------------------- TAN THANG ----------------------
-
-void swap(int& a, int& b);
-void selectionSort(int a[], int n);
-void heapify(int a[], int n, int i);
-void heapSort(int a[], int n);
-int partition(int a[], int low, int high);
-void quickSort(int a[], int low, int high);
-
-// --------------------------- LE KHOI ------------------------
-
+// ----------------- ALL SORTING ALGORITHM -----------------------------
 // Insertion Sort algorithm
-void insertionSort(int a[], int n);
+void insertionSort(int* a, int n);
+
+// Selection sort algorithm
+void selectionSort(int* a, int n);
+
+// Bubble sort algorithm
+void bubbleSort(int *a, int n);
 
 // Shaker (Cocktail) Sort algorithm
-void shakerSort(int a[], int n);
-// Shell Sort algorithm
-void shellSort(int arr[], int n);
-// Counting Sort algorithm
-void countingSort(int arr[], int n);
-void printArray(int arr[], int n);
+void shakerSort(int *a, int n);
 
+// Shell Sort algorithm
+void shellSort(int *a, int n);
+
+// Heap sort algorithm
+void heapify(int *a, int n, int i);				// sub function for heap sort algorithm
+void heapSort(int *a, int n);
+
+// Merge sort algorithm
+void merge(int *a, int l, int m, int r);		// sub function for merge sort algorithm
+void mergeSort(int *a, int l, int r);
+
+// Quick sort algorithm
+int medianOfThree(int* a, int l, int r);
+int partition(int *a, int low, int high);		// sub function for quick sort algorithm
+void quickSort(int *a, int low, int high);
+
+// Counting Sort algorithm
+void countingSort(int *a, int n);
+
+// Radix sort algorithm
+void countSort(int *a, int n, int exp);			// sub function for radix sort
+int FindMax(int *a, int n);
+void radixsort(int *a, int n);	
+
+// Flash sort algorithm 
+int FindMin(int *a, int n);
+void FlashSort(int *a, int n);
