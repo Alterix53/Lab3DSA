@@ -133,6 +133,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="SortAndCountCompare.cpp" />
     <ClCompile Include="SortAndCountRuntime.cpp" />
+    <ClCompile Include="utility.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CheckParameter.h" />
@@ -140,6 +141,7 @@
     <ClInclude Include="DataGenerator.h" />
     <ClInclude Include="SortAndCountCompare.h" />
     <ClInclude Include="SortAndCountRuntime.h" />
+    <ClInclude Include="utility.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

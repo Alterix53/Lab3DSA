@@ -1,19 +1,18 @@
 #pragma once
 #include <iostream>
+#include "utility.h"
 #include "CheckParameter.h"
 #include "SortAndCountRuntime.h"
 #include "SortAndCountCompare.h"
 #include "DataGenerator.h"
 #include <iostream>
 #include <string>
-#include <fstream>
 #include <cstring>
 #include <ctime>
 #include <time.h>
 #include <chrono>
 using namespace std;
-string ConverString(char outputParameters[]);
-void PrintResultAlgorithmMode(char outputParameters[], double runtime, long long compare);
+
 // ----------------------- RUN COMMAND FUNCTIONS -----------------------------
 
 // Function that runs the correctspoding sorting algorithm(s):
@@ -21,7 +20,7 @@ void RunSorting(int *a, int arrSize, char algorithmName[], char outputParameters
 
 // Function that runs the sorting algorithm on a specific array order
 // This function is used in the third command
-void RunSpecificArrayOrderType(int *a, int arrSize, int arrOrder, char algorithmName[], char outputParameters[], string fileName);
+void RunSpecificArrayOrderType(int arrSize, int arrOrder, char algorithmName[], char outputParameters[], string fileName);
 
 // Functions that run the command based on current command line:
 void RunCommandTypeOne(char algorithmName[], char fileName[], char outputParameters[]);							// first command line

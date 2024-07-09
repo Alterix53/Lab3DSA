@@ -26,21 +26,6 @@ bool isInputOrder(char inputOrder[]) {
     return false;
 }
 
-int ArrayOrderType(char inputOrder[]) {
-    if (!isString(inputOrder))
-        return false;
-    string Order(inputOrder);
-    if (Order == "-rand")
-        return 0;
-    if (Order == "-sorted")
-        return 1;
-    if (Order == "-rev")
-        return 2;
-    if (Order == "-nsorted")
-        return 3;
-    return -1;
-}
-
 bool isOutputParameters(char outputType[]) {
     if (!isString(outputType))
         return false;
@@ -50,45 +35,6 @@ bool isOutputParameters(char outputType[]) {
     return false;
 }
 
-int OutputType(char outputType[]) {
-    string output(outputType);
-    if (output == "-time")
-        return 0;
-    if (output == "-comp")
-        return 1;
-    if (output == "-both")
-        return 2;
-    return -1;
-}
-
-
-int AlgorithmType(char algoName[]) {
-    string name(algoName);
-    if (name == "selection-sort")
-        return 0;
-    if (name == "insertion-sort")
-        return 1;
-    if (name == "bubble-sort")
-        return 2;
-    if (name == "shaker-sort")
-        return 3;
-    if (name == "shell-sort")
-        return 4;
-    if (name == "heap-sort")
-        return 5;
-    if (name == "merge-sort")
-        return 6;
-    if (name == "quick-sort")
-        return 7;
-    if (name == "counting-sort")
-        return 8;
-    if (name == "radix-sort")
-        return 9;
-    if (name == "flash-sort")
-        return 10;
-    return -1;
-}
-
 bool isAlgorithmMode(char mode[]) {
     return (strcmp(mode, "-a") == 0);
 }
@@ -96,8 +42,6 @@ bool isAlgorithmMode(char mode[]) {
 bool isCompareMode(char mode[]) {
     return (strcmp(mode, "-c") == 0);
 }
-
-
 
 bool isNumber(char s[])
 {
@@ -113,13 +57,6 @@ bool isString(char s[]) {
     return !isNumber(s);
 }
 
-int convertStringToNum(char s[]) {
-    int sum = 0;
-    for (int i = 0; i < strlen(s); i++) {
-        sum = sum * 10 + s[i] - '0';
-    }
-    return sum;
-}
 
 // check if the prototype calls the first command type
 bool isCommandTypeOne(int argumentNum, char* argv[]) {
@@ -156,6 +93,7 @@ bool isCommandTypeTwo(int argumentNum, char* argv[]) {
     return true;
 }
 
+// function to check if the input command is the third command prototype
 bool isCommandTypeThree(int argumentNum, char* argv[]) {
 
     // check each part of the command inputs, return false if any of them does not match the correct prototype
@@ -172,6 +110,7 @@ bool isCommandTypeThree(int argumentNum, char* argv[]) {
     return true;
 }
 
+// function to check if the input command is the fourth command prototype
 bool isCommandTypeFour(int argumentNum, char* argv[]) {
     if (argumentNum != 5)
         return false;
@@ -186,6 +125,7 @@ bool isCommandTypeFour(int argumentNum, char* argv[]) {
     return true;
 }
 
+// function to check if the input command is the fifth command prototype
 bool isCommandTypeFive(int argumentNum, char* argv[]) {
     if (argumentNum != 6)
         return false;

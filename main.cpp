@@ -1,9 +1,5 @@
-#include <iostream>
-#include <cstring>
-#include "CheckParameter.h"
-#include "SortAndCountRuntime.h"
 #include "Command.h"
-#include "DataGenerator.h"
+
 using namespace std;
 
 int main(int argc, char* argv[]) {
@@ -24,15 +20,8 @@ int main(int argc, char* argv[]) {
 		RunCommandTypeFive(argv[2], argv[3], argv[4], argv[5]);
 	}
 	else {
-		cout << "ERROR! The Command Line does not match any type Specifier" << endl;
-		cout << "Help: Here are the list of commands:" << endl;
-		cout << "   Command 1: [Execution file name] -a [Algorithm]   [Given input]   [Output parameter(s)]" << endl;
-		cout << "   Command 2: [Execution file name] -a [Algorithm]   [Input size]    [Input order]           [Output parameter(s)]" << endl;
-		cout << "   Command 3: [Execution file name] -a [Algorithm]   [Input size]    [Output parameter(s)]" << endl;
-		cout << "   Command 4: [Execution file name] -c [Algorithm 1] [Algorithm 2]   [Given input]" << endl;
-		cout << "   Command 5: [Execution file name] -c [Algorithm 1] [Algorithm 2]   [Input size]            [Input order]" << endl;
-		cout << "Make sure that your command line matches one of the above command parameters." << endl;
+		PrintUndefinedErrorMessage();
 	}
-	
 	return 0;
 }
+

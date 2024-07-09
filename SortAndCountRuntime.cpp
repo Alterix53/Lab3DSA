@@ -5,8 +5,6 @@
 #include <cstring>
 #include "SortAndCountRuntime.h"
 using namespace std;
-// https://www.geeksforgeeks.org/bubble-sort-in-cpp/
-// https://www.geeksforgeeks.org/radix-sort/
 
 
 // ------------------------ PHAM ANH ----------------------
@@ -41,7 +39,7 @@ int FindMax(int *a, int n) {
 void countSort(int *a, int n, int exp)
 {
 
-    // Output aay
+    // Output array
     int* output = new int[n];
     int i, count[10] = { 0 };
 
@@ -56,13 +54,13 @@ void countSort(int *a, int n, int exp)
     for (i = 1; i < 10; i++)
         count[i] += count[i - 1];
 
-    // Build the output aay
+    // Build the output array
     for (i = n - 1; i >= 0; i--) {
         output[count[(a[i] / exp) % 10] - 1] = a[i];
         count[(a[i] / exp) % 10]--;
     }
 
-    // Copy the output aay to *a,
+    // Copy the output array to *a,
     // so that *a now contains sorted
     // numbers according to current digit
     for (i = 0; i < n; i++)
@@ -162,11 +160,11 @@ void swap(int& a, int& b) {
 }
 
 void selectionSort(int *a, int n) {
-    // Traverse the aay
+    // Traverse the array
     for (int i = 0; i < n - 1; ++i) {
         // Set the initial minimum index to the current position
         int min_idx = i;
-        // Traverse the remaining unsorted part of the aay
+        // Traverse the remaining unsorted part of the array
         for (int j = i + 1; j < n; ++j) {
             // Update min_idx if a smaller element is found
             if (a[j] < a[min_idx]) {
@@ -203,7 +201,7 @@ void heapify(int *a, int n, int i) {
 }
 
 void heapSort(int *a, int n) {
-    // Build heap (reaange aay)
+    // Build heap (reaange array)
     for (int i = n / 2 - 1; i >= 0; i--) {
         heapify(a, n, i);
     }
@@ -328,31 +326,31 @@ void countingSort(int *a, int n) {
     if (n <= 1) return;  // Base case: already sorted or single element
 
     int maxVal = a[0], minVal = a[0];
-    for (int i = 1; i < n; ++i) {  // Find min and max values in aay
+    for (int i = 1; i < n; ++i) {  // Find min and max values in array
         if (a[i] > maxVal) maxVal = a[i];
         if (a[i] < minVal) minVal = a[i];
     }
 
     int range = maxVal - minVal + 1;
-    int* count = new int[range]();  // Initialize count aay with zeros
+    int* count = new int[range]();  // Initialize count array with zeros
 
     for (int i = 0; i < n; ++i) {  // Count occurrences of each element
         count[a[i] - minVal]++;  // Increment count for current element
     }
 
-    for (int i = 1; i < range; ++i) {  // Modify count aay to reflect positions in output aay
+    for (int i = 1; i < range; ++i) {  // Modify count array to reflect positions in output array
         count[i] += count[i - 1];  // Cumulative sum of counts
     }
 
     int* output = new int[n];
 
     for (int i = n - 1; i >= 0; --i) {
-        output[count[a[i] - minVal] - 1] = a[i];  // Place elements in output aay
+        output[count[a[i] - minVal] - 1] = a[i];  // Place elements in output array
         count[a[i] - minVal]--;  // Decrement count for current element
     }
 
     for (int i = 0; i < n; ++i) {
-        a[i] = output[i];  // Copy sorted elements back to original aay
+        a[i] = output[i];  // Copy sorted elements back to original array
     }
 
     delete[] count;
@@ -371,10 +369,10 @@ int FindMin(int *a, int n) {
 }
 
 void FlashSort(int *a, int n) {
-    if (n <= 1) return;
+    if (n <= 1) return; // only 1 element
 
     // Bước 1: create classes
-    int m = int(0.45 * n); // number of classes is 0.45*(number of elements in aay)
+    int m = int(0.45 * n); // number of classes is 0.45*(number of elements in array)
     int* L = new int[m](); 
 
     int minVal = FindMin(a, n);
@@ -426,6 +424,6 @@ void FlashSort(int *a, int n) {
         a[j + 1] = key;
     }
 
-    // delete the aay
+    // delete the array
     delete[] L; 
 }

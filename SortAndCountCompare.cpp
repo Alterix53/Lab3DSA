@@ -5,9 +5,9 @@
 #include <cstring>
 
 using namespace std;
-// https://www.geeksforgeeks.org/bubble-sort-in-cpp/
+
 // https://www.geeksforgeeks.org/radix-sort/
-// https://www.geeksforgeeks.org/heap-sort/
+
 
 void BubbleSortCompareCount(int *a, int n, long long& count_compare)
 {
@@ -106,39 +106,24 @@ void HeapSortCompareCount(int *a, int N, long long& count_compare)
     }
 }
 
-// --------------- TAN THANG ---------------------
-
-long long count_compare;
-
-void swap(long long& a, long long& b) {
-    int temp = a;
-    a = b;
-    b = temp;
-}
-
+//------------------- Nguyễn Thắng----------------------------------------
+// 
+// count_compare keeps track of the number of comparisons made
 void selectionSortCompareCount(int *a, int n, long long& count_compare) {
-    // Initialize counters for comparisons
-    count_compare = 0;
-
-    // Traverse the aay
-    for (int i = 0; i < n - 1; ++i) {
-        // Set the initial minimum index to the current position
-        int min_idx = i;
-        // Traverse the remaining unsorted part of the aay
-        for (int j = i + 1; j < n; ++j) {
-            count_compare++; // Count each comparison in the inner loop
-
-            // Update min_idx if a smaller element is found
-            if (a[j] < a[min_idx]) {
+    count_compare = 0;  // Initialize comparison count
+    for (int i = 0; ++count_compare && i < n - 1; ++i) {  // Traverse the array
+        int min_idx = i;  // Assume the minimum is the first element
+        for (int j = i + 1; ++count_compare && j < n; ++j) {  // Find the minimum element in the remaining array
+            if (++count_compare && a[j] < a[min_idx]) {  // Update the minimum index if current element is smaller
                 min_idx = j;
             }
         }
-        // Swap the found minimum element with the first element
-        if (min_idx != i) {
+        if (++count_compare && min_idx != i) {  // Swap if the minimum is not at the current position
             swap(a[i], a[min_idx]);
         }
     }
 }
+
 
 void merge(int *a, int l, int m, int r, long long& count_compare)
 {
@@ -184,54 +169,51 @@ void mergeSortCompareCount(int *a, int l, int r, long long& count_compare)
         merge(a, l, m, r, count_compare);
     }
 }
+
+// count_compare keeps track of the number of comparisons made
 void heapSortCompareCount(int *a, int n, long long& count_compare) {
-    count_compare = 0;
-    // Build heap (reaange aay)
-    for (int i = n / 2 - 1; i >= 0; i--) {
+    count_compare = 0;  // Initialize comparison count
+    for (int i = n / 2 - 1; ++count_compare && i >= 0; i--) {  // Build heap (rearrange array)
         heapify(a, n, i, count_compare);
     }
-
-    // One by one extract an element from heap
-    for (int i = n - 1; i > 0; i--) {
-        // Move current root to end
-        swap(a[0], a[i]);
-        // Call max heapify on the reduced heap
-        heapify(a, i, 0, count_compare);
+    for (int i = n - 1; ++count_compare && i > 0; i--) {  // Extract elements from heap one by one
+        swap(a[0], a[i]);  // Move current root to end
+        heapify(a, i, 0, count_compare);  // Call heapify on the reduced heap
     }
 }
 
-// Find the median element in the aay
+// Function to find the median of three elements for quicksort pivot
 int medianOfThree(int* a, int l, int r, long long& count_compare) {
-    int mid = l + (r - l) / 2;
-    if (++count_compare && a[l] > a[mid]) swap(a[l], a[mid]);
-    if (++count_compare && a[l] > a[r]) swap(a[l], a[r]);
-    if (++count_compare && a[mid] > a[r]) swap(a[mid], a[r]);
-    return mid;
+    int mid = l + (r - l) / 2;  // Calculate the middle index
+    if (++count_compare && a[l] > a[mid]) swap(a[l], a[mid]);  // Ensure a[l] <= a[mid]
+    if (++count_compare && a[l] > a[r]) swap(a[l], a[r]);  // Ensure a[l] <= a[r]
+    if (++count_compare && a[mid] > a[r]) swap(a[mid], a[r]);  // Ensure a[mid] <= a[r]
+    return mid;  // Return the median index
 }
 
-// Function to partition the aay and return the pivot index after partitioning
+// Function to partition the array a for quicksort
 int partition(int* a, int l, int r, long long& count_compare) {
-    int pivotIndex = medianOfThree(a, l, r, count_compare);
-    int pivot = a[pivotIndex];
-    swap(a[pivotIndex], a[r]); // Move the pivot to the end for ease of operation
-    int i = l - 1;
-
-    for (int j = l; ++count_compare && j < r; ++j) {
-        if (++count_compare && a[j] < pivot) {
+    int pivotIndex = medianOfThree(a, l, r, count_compare);  // Find pivot using median of three
+    int pivot = a[pivotIndex];  // Get the pivot value
+    swap(a[pivotIndex], a[r]);  // Move pivot to end
+    int i = l - 1;  // Index of smaller element
+    for (int j = l; ++count_compare && j < r; ++j) {  // Traverse the array
+        if (++count_compare && a[j] < pivot) {  // If current element is smaller than the pivot
             ++i;
-            swap(a[i], a[j]);
+            swap(a[i], a[j]);  // Swap it with the smaller element
         }
     }
-    swap(a[i + 1], a[r]); // Return the pivot to the correct position
-    return i + 1;
+    swap(a[i + 1], a[r]);  // Swap the pivot element to its correct position
+    return i + 1;  // Return the partition index
 }
 
-// Function quick sort
+// Function to perform quicksort on array a from index l to r
+// count_compare keeps track of the number of comparisons made
 void quickSortCompareCount(int* a, int l, int r, long long& count_compare) {
-    if (++count_compare && l < r) {
-        int pi = partition(a, l, r, count_compare);
-        quickSortCompareCount(a, l, pi - 1, count_compare);
-        quickSortCompareCount(a, pi + 1, r, count_compare);
+    if (++count_compare && l < r) {  // If there are elements to sort
+        int pi = partition(a, l, r, count_compare);  // Partition the array
+        quickSortCompareCount(a, l, pi - 1, count_compare);  // Sort the elements before the partition
+        quickSortCompareCount(a, pi + 1, r, count_compare);  // Sort the elements after the partition
     }
 }
 // Insertion Sort algorithm with comparison count
@@ -341,7 +323,7 @@ void FlashSortCompareCount(int* a, int n, long long &count_compare) {
     if (++count_compare && n <= 1) return;
 
     // Bước 1: create classes
-    int m = int(0.45 * n); // number of classes is 0.45*(number of elements in aay)
+    int m = int(0.45 * n); // number of classes is 0.45*(number of elements in array)
     int* L = new int[m]();
 
     int minVal = FindMin(a, n, count_compare);
@@ -393,6 +375,6 @@ void FlashSortCompareCount(int* a, int n, long long &count_compare) {
         a[j + 1] = key;
     }
 
-    // delete the aay
+    // delete the array
     delete[] L;
 }
